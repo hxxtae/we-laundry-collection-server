@@ -6,17 +6,17 @@ import 'express-async-errors';
 
 import { collectionsRouter } from './router/index.js';
 import { connectDB } from './db/database.js';
+import { config } from './config.js';
 
 const app = express();
 
 const corsOption = {
-  origin: 'http://localhost:3000',
+  origin: config.cors.allowedOrigin,
   optionsSuccessStatus: 200,
   credentials: true,
 };
 
 app.use(express.json());
-//app.use(express.urlencoded( {extended : false } ));
 app.use(cookieParser());
 app.use(cors(corsOption));
 app.use(morgan('tiny'));
@@ -36,7 +36,7 @@ app.use((error, req, res, next) => {
 });
 
 connectDB().then(() => {
-  const server = app.listen(8080);
+  const server = app.listen(config.port);
   if (server) {
     console.log('server start');
   }
