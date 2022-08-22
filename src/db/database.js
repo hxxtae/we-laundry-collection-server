@@ -18,3 +18,7 @@ export function getCollections(name) {
 export async function removeCollection(name) {
   return db.dropCollection(name);
 }
+
+export function getManagerCollection() {
+  return db.collection('manager');
+}
