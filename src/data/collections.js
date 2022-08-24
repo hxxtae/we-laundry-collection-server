@@ -13,7 +13,7 @@ export async function getAll() {
 /**
  * 특정 Collection 조회 Function
  * @param { string } collectionName - collection name
- * @returns { Promise<{name: string, type: string}[]> } collection object array
+ * @returns { Promise<[] | {name: string, type: string}[]> } collection object array
  */
 export async function getFindOne(collectionName) {
   const name = collectionName ? collectionName : '';

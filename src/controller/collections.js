@@ -17,9 +17,8 @@ export async function collectionRemove(req, res, next) {
     return res.status(406).json({ message: `The Collection [${name}] cannot be deleted` });
   }
 
-  const obj = await collectionsRepository.getFindOne(name);
-  const found = Object.keys(obj).length;
-  if (!found) {
+  const objArr = await collectionsRepository.getFindOne(name);
+  if (!objArr.length) {
     return res.status(404).json({ message: `Collection name (${name}) not found` });
   }
 
@@ -29,6 +28,9 @@ export async function collectionRemove(req, res, next) {
 
 export async function collectionRemoveMany(req, res, next) {
   const { names } = req.body;
+  if (names.constructor !== Array) {
+    return res.status(404).json({ message: 'Collection names not Array' });
+  }
 
   if (!names.length) {
     return res.status(404).json({ message: `Collection names length 0` });
