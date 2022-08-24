@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
-import { config } from '../config.js';
 import jwt from 'jsonwebtoken';
+import { config } from '../config.js';
 
-import { getManager } from '../data/auth.js';
+import * as AuthRepository from '../data/auth.js';
 
 
 export async function managerConfirm(req, res, next) {
@@ -11,8 +11,9 @@ export async function managerConfirm(req, res, next) {
     return res.status(401).json({ message: "유효하지 않은 계정입니다." });
   }
 
-  const manager = await getManager(admin_id);
-  if (manager == undefined) {
+  const manager = await AuthRepository.getManager(admin_id);
+  const empty = (Object.keys(manager).length === 0) && (manager.constructor === Object);
+  if (empty) {
     return res.status(401).json({ message: "유효하지 않은 계정입니다." });
   }
 
@@ -30,6 +31,16 @@ export async function managerConfirm(req, res, next) {
 export async function managerDisConnect(req, res, next) {
   setToken(res, '');
   res.status(200).json({ message: 'Manager has been logged out' });
+}
+
+export async function managerKeeping(req, res, next) {
+  const { token, admin_id } = req;
+  const manager = await AuthRepository.getManager(admin_id);
+  const empty = (Object.keys(manager).length === 0) && (manager.constructor === Object);
+  if (empty) {
+    return res.status(401).json({ message: 'Please Login' });
+  }
+  res.status(200).json({ token, admin_id });
 }
 
 function createJwtToken(id) {
