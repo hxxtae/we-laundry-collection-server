@@ -20,5 +20,9 @@ export async function removeCollection(name) {
 }
 
 export function getManagerCollection() {
-  return db.collection('manager');
+  return db.collection(config.table.manager);
+}
+
+export function getUsersCollection() {
+  return db.collection(config.table.users);
 }

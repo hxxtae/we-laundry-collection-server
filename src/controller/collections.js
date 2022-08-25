@@ -2,8 +2,8 @@ import { config } from '../config.js';
 import * as collectionsRepository from '../data/collections.js';
 
 export async function collectionAll(req, res, next) {
-  const result = await collectionsRepository.getAll();
-  return res.status(200).json(result);
+  const collections = await collectionsRepository.getAll();
+  return res.status(200).json(collections);
 }
 
 export async function collectionRemove(req, res, next) {

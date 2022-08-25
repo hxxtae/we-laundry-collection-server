@@ -2,7 +2,7 @@ import { getCollections, removeCollection } from '../db/database.js';
 
 /**
  * Collection 전체 조회 Function
- * @returns { Promise<{name: string, type: string}[]> } collections object array
+ * @returns { Promise<[] | {name: string, type: string}[]> } collections object array
  */
 export async function getAll() {  
   return getCollections()
@@ -40,7 +40,7 @@ export async function removeOne(collectionName) {
 export async function removeMany(collectionNames) {
   const names = collectionNames.length ? collectionNames : [];
   const asyncResult = names.map(async (name) => {
-    removeCollection(name);
+    await removeCollection(name);
     return name;
   });
   const result = await Promise.all(asyncResult);
