@@ -7,8 +7,9 @@ export async function collectionAll(req, res, next) {
 }
 
 export async function collectionRemove(req, res, next) {
-  const name = req.params.name;
-  if (!name) {
+  const { name } = req.params;
+  
+  if (!name || name === ':name') {
     return res.status(404).json({ messege: `Collection name is undefined` });
   }
 
