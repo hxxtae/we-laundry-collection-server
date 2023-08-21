@@ -8,10 +8,10 @@ const AUTH_ERROR = { message: '관리자 외에는 처리할 수 없습니다.' 
 export const isAuth = async (req, res, next) => {
   let token;
 
-  // const authHeader = req.get('Authorization');
-  // if (authHeader && authHeader.startsWith('Bearer ')) {
-  //   token = authHeader.split(' ')[1];
-  // }
+  const authHeader = req.get('Authorization');
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.split(' ')[1];
+  }
 
   if (!token) {
     token = req.cookies['m_token'];
